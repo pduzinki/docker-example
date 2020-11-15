@@ -6,31 +6,31 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"go-in-docker-example/models"
+	"docker-example/models"
 )
 
-// MessageController ...
+// MessageController is responsible for handling message resources
 type MessageController struct {
 	ms models.MessageService
 }
 
-// NewMessageController ...
+// NewMessageController creates message controller instance
 func NewMessageController(ms models.MessageService) *MessageController {
 	return &MessageController{
 		ms: ms,
 	}
 }
 
-// Home ...
+// Home handles GET /
 func (mc *MessageController) Home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "hello there!")
 }
 
-// ReadMessages ...
+// ReadMessages handles GET /messages
 func (mc *MessageController) ReadMessages(w http.ResponseWriter, r *http.Request) {
 	messages, err := mc.ms.GetAll()
 	if err != nil {
-		// TODO
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -43,19 +43,19 @@ func (mc *MessageController) WriteMessage(w http.ResponseWriter, r *http.Request
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		// TODO
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	err = json.Unmarshal(body, &message)
 	if err != nil {
-		// TODO
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	err = mc.ms.Create(&message)
 	if err != nil {
-		// TODO
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 }

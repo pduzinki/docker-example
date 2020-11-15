@@ -10,13 +10,13 @@ import (
 
 var errInvalidID error = errors.New("invalid ID")
 
-// Message ...
+// Message represents message data in the database
 type Message struct {
 	gorm.Model
 	Text string `gorm:"not null"`
 }
 
-// MessageDB ...
+// MessageDB is an interface for interacting with message data in the database
 type MessageDB interface {
 	GetAll() ([]Message, error)
 
@@ -24,7 +24,7 @@ type MessageDB interface {
 	Delete(id uint) error
 }
 
-// MessageService ...
+// MessageService is an interface for interacting with message model
 type MessageService interface {
 	MessageDB
 }
@@ -61,7 +61,7 @@ func (ms *messageService) Delete(id uint) error {
 	return ms.db.Delete(&message).Error
 }
 
-// NewMessageService ...
+// NewMessageService creates MessageService instance
 func NewMessageService(dialect, connectionInfo string) MessageService {
 	db, err := gorm.Open(dialect, connectionInfo)
 	if err != nil {
