@@ -3,7 +3,7 @@ A very simple go app and docker configuration to run it.
 
 ## Building
 ```sh
-docker build -t docker-example
+docker build -t docker-example .
 ```
 
 ## Running
