@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 
@@ -15,7 +16,8 @@ func main() {
 	// config
 	dialect := "postgres"
 	connectionInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s "+
-		"sslmode=disable", "postgres", 5432, "postgres", "123", "docker_example_dev")
+		"sslmode=disable", "postgres", 5432, os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"), os.Getenv("POSTGRES_DB"))
 
 	// message service
 	ms := models.NewMessageService(dialect, connectionInfo)
