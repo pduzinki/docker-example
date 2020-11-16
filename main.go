@@ -15,7 +15,7 @@ func main() {
 	// config
 	dialect := "postgres"
 	connectionInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s "+
-		"sslmode=disable", "postgres", 5432, "postgres", "123", "go_in_docker_dev")
+		"sslmode=disable", "postgres", 5432, "postgres", "123", "docker_example_dev")
 
 	// message service
 	ms := models.NewMessageService(dialect, connectionInfo)

@@ -5,19 +5,19 @@ services:
     image: postgres:13.0
     expose:
       - 5432
-    environment:
-      POSTGRES_DB: go_in_docker_dev
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
+    env_file:
+      - config.env
     volumes:
-      - godo-data:/var/lib/postgresql/data
+      - docker-example-data:/var/lib/postgresql/data
   app:
-    image: godo
+    image: docker-example
     ports:
       - 3000:3000
+    environment:
+      WAIT_HOSTS: postgres:5432
     depends_on:
       - postgres
 
 volumes:
-  godo-data:
+  docker-example-data:
 
